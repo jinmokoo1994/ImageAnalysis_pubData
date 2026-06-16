@@ -1,0 +1,2 @@
+collection_id,PatientID,timepoint,StudyDate,SeriesDate,AcquisitionDate,AcquisitionTime,Modality,SeriesInstanceUID,n_slices,SliceThickness_mm,license,GTV_tumor_mL,lung_mL,heart_mL,aorta_mL,trachea_mL,GTV_source,organ_source
+nsclc_radiomics,LUNG1-133,1,20060819,20060819,20060819,122417.608590,CT,1.3.6.1.4.1.32722.99.99.6600892222510441517902761822517132550,184,3.0,CC BY-NC 3.0,1.399,5722.9,593.4,345.1,71.3,"expert SEG (Neoplasm, Primary)",TotalSegmentator (fast 3mm)

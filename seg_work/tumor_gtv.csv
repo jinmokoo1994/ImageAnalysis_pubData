@@ -1,0 +1,2 @@
+PatientID,SeriesInstanceUID,GTV_mL,total_lung_mL,GTV_to_lung_pct,tumor_source
+LUNG1-133,1.3.6.1.4.1.32722.99.99.6600892222510441517902761822517132550,1.399,5868.3,0.0238,"expert SEG: Neoplasm, Primary (= RTSTRUCT GTV-1)"
