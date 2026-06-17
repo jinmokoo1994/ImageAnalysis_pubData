@@ -21,33 +21,29 @@ Single-timepoint analysis of NSCLC-Radiomics patient **LUNG1-133** (chest CT, 18
 - **Segments** heart, aorta, lung, and trachea with [**TotalSegmentator**](https://github.com/wasserth/TotalSegmentator)
   (pretrained 3D nnU-Net), merging the five lung lobes into one lung.
 - **Interactive viewer** (ipywidgets): scroll slices, switch CT windows, toggle each organ overlay.
-- **Compares** TotalSegmentator against the segmentations IDC ships for this patient:
-  - *Expert SEG* (manual + semiautomatic): primary tumor (`Neoplasm, Primary` = GTV), lung, spinal cord.
-  - *AI nnU-Net SEG* in three configs (`2d`, `3d_lowres`, `3d_fullres`): heart, aorta, trachea, esophagus.
-- **Dice agreement** across all models, plus **inter-model variability** analysis (cross-architecture
+- **Compares** TotalSegmentator against the segmentations IDC ships for this patient (*AI nnU-Net SEG*) in three configs (`2d`, `3d_lowres`, `3d_fullres`): compared performance of 4 models at three organs that all models shared (i.e. heart, aorta, trachea). In case of the *lung*, TotalSegmentator performance was compared to that of the expert-curated segmentation (**expert SEG**).
+- **Dice agreement** across all 4 models, plus inter-model variability analysis (cross-architecture
   vs within-architecture config spread).
-- **Tumor (GTV)** quantification from the expert segmentation: GTV volume and GTV-to-lung ratio.
+- **Tumor (GTV)** quantification from the expert SEG: GTV volume and GTV-to-lung ratio (I did this just for fun honestly).
 - A static overlay montage tool for figures.
 
 **Headline results (LUNG1-133):**
 
 | Structure | TotalSeg vs reference (Dice) | Notes |
 |-----------|------------------------------|-------|
-| trachea   | 0.90–0.92 (vs nnU-Net)       | highest (air-filled, sharp boundary) |
+| trachea   | 0.90–0.92 (vs nnU-Net)       | highest match due to air-filled structure (sharp boundary) |
 | aorta     | 0.82–0.84 (vs nnU-Net)       | most volume spread across models (CV ~14%) |
 | heart     | 0.79 (vs nnU-Net)            | fuzzy soft-tissue boundary |
 | lung      | **0.974** (vs expert SEG)    | nnU-Net OAR models don't include lung |
 
 Within one architecture (nnU-Net 2D/3D-lowres/3D-fullres) Dice is ~0.95–0.97 — i.e. **architecture
-choice matters more than configuration.** Tumor (expert GTV): **1.40 mL, ~0.024% of lung volume.**
+choice matters more than configuration.** Tumor (expert GTV): **1.40 mL, ~0.024% of lung volume.** I would guess stage 1 Lung cancer diagnosis for this patient, although tumor size is not the sole factor to consider.
 
 ### 2. `therapyNgrowthtracking/tumor_growth_tracking.ipynb` — longitudinal growth rate
 
-NSCLC-Radiomics is single-timepoint, so growth rate is demonstrated on the **`anti_pd_1_lung`**
-immunotherapy collection (patient **PD-1-Lung-00001**, two CT timepoints 57 days apart, each shipping
-an AI tumor/nodule segmentation).
+Double-timepoint analysis of patient **PD-1-Lung-00001** in **`anti_pd_1_lung`** immunotherapy collection (two CT timepoints 57 days apart, segmentation restricted to *AIMI lung and nodule AI segmentation* as the only shared segmentation model at both timepoints).
 
-- Downloads all CT timepoints + tumor segmentations; reads per-scan acquisition dates/times.
+- Downloads all CT timepoints (day 0, 57) + tumor segmentations; reads per-scan acquisition dates/times.
 - Measures GTV at each timepoint and computes **interval, % change, specific growth rate, and volume
   doubling time (VDT)**.
 - Result: GTV falls **1.86 → 0.70 mL (−62.5%) over 57 days** (VDT −40 d) — a volumetric treatment
