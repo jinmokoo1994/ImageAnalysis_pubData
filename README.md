@@ -46,23 +46,22 @@ Double-timepoint analysis of patient **PD-1-Lung-00001** in **`anti_pd_1_lung`**
 - Downloads all CT timepoints (day 0, 57) + tumor segmentations; reads per-scan acquisition dates/times.
 - Measures GTV at each timepoint and computes **interval, % change, specific growth rate, and volume
   doubling time (VDT)**.
-- Result: GTV falls **1.86 → 0.70 mL (−62.5%) over 57 days** (VDT −40 d) — a volumetric treatment
+- Result: GTV falls **1.86 mL → 0.70 mL (−62.5%) over 57 days** (VDT −40 d) — a volumetric treatment
   response approaching (but below) the RECIST-equivalent partial-response threshold.
 
 ## Repository layout
 
 ```
 .
-├── organ_segmentation.ipynb            # primary notebook (hand-edited)
-├── build_seg_notebook.py               # generator script used to scaffold the notebook*
+├── organ_segmentation.ipynb            # Notebook no.1 (hand-edited)
 ├── nsclc_LUNG1-133_ct_metadata.csv     # CT acquisition parameters
 ├── seg_work/                           # outputs: tumor_gtv.csv, montage PNG (large .nii.gz gitignored)
 ├── therapyNgrowthtracking/
-│   ├── tumor_growth_tracking.ipynb
-│   ├── build_growth_notebook.py
-│   ├── growth_metrics.csv
-│   ├── timepoint_records.csv
-│   └── gtv_growth_tracking.png
+│   ├── tumor_growth_tracking.ipynb     # Notebook no.2 (hand-edited)
+│   ├── gtv_bar_day0_day57.png          # A bar graph: GTV reduction after immunotherapy
+│   ├── tumor_slices_grid.png           # Overlay figure of all tumor-bearing CT scans
+│   ├── growth_metrics.csv              # Saved computed metrics
+│   └── timepoint_records.csv           # Raw per-timepoint measurements metadata
 ├── imaging-data-commons-1.6.4/         # vendored IDC Claude skill (MIT, A. Fedorov)
 ├── README.md
 ├── LICENSE
