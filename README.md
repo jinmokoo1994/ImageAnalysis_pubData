@@ -48,6 +48,9 @@ Double-timepoint analysis of patient **PD-1-Lung-00001** in **`anti_pd_1_lung`**
   doubling time (VDT)**.
 - Result: GTV falls **1.86 mL → 0.70 mL (−62.5%) over 57 days** (VDT −40 d) — a volumetric treatment
   response approaching (but below) the RECIST-equivalent partial-response threshold.
+<p align="center">
+    <img src="therapyNgrowthtracking/gtv_bar_day0_day57.png" width="500" alt="CT GTV day 0 and 57">
+</p>
 
 ### 3. `therapyNgrowthtracking/tumor_growth_tracking_multiSEG.ipynb` - refined MTV estimate using PET/CT + AI segmentation vs Human drawn segmentation comparison
 
@@ -70,9 +73,9 @@ Sister notebook to notebook #2 `tumor_growth_tracking.ipynb`. Same dataset plus 
 ├── seg_work/                                  
 │   ├── organ_segmentation.ipynb               # Notebook no.1 (hand-edited)
 │   ├── nsclc_LUNG1-133_ct_metadata.csv         # CT acquisition parameters
-│   ├──organ_overlay_montage.png                # Overlay figure: Organ segmentation in axial CT scan 
-│   ├──tumor_gtv.csv                            # Saved dataset metrics
-│   └──timepoint_records.csv                    # Saved dataset metrics
+│   ├── organ_overlay_montage.png                # Overlay figure: Organ segmentation in axial CT scan 
+│   ├── tumor_gtv.csv                            # Saved dataset metrics
+│   └── timepoint_records.csv                    # Saved dataset metrics
 ├── therapyNgrowthtracking/
 │   ├── tumor_growth_tracking.ipynb            # Notebook no.2 (hand-edited)
 │   ├── gtv_bar_day0_day57.png                  # A bar graph: GTV reduction after immunotherapy
