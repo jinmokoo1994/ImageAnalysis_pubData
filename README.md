@@ -1,4 +1,4 @@
-# Lung-cancer CT segmentation & tumor growth tracking (NCI Imaging Data Commons)
+# Lung-cancer patient CT and PET/CT segmentation & tumor volume tracking (NCI Imaging Data Commons)
 
 Reproducible notebooks for organ and tumor segmentation on public lung-cancer CT from the
 [NCI Imaging Data Commons (IDC)](https://portal.imaging.datacommons.cancer.gov/), using
