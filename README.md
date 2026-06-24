@@ -117,7 +117,7 @@ VIRTUAL_ENV=.idc-venv uv pip install \
 ## Usage
 
 ```bash
-.idc-venv/bin/jupyter lab organ_segmentation.ipynb
+.idc-venv/bin/jupyter lab seg_work/organ_segmentation.ipynb
 ```
 
 Select the **"Python 3 (.idc-venv)"** kernel and *Run All*. The notebooks download the required series
@@ -135,7 +135,7 @@ outputs but not the widgets.
 ## Citations
 
 If you use this work, please cite the data and methods (full list with DOIs is in the final cell of
-`organ_segmentation.ipynb`):
+`seg_work/organ_segmentation.ipynb`):
 
 - **NSCLC-Radiomics dataset:** Aerts HJWL, et al. *Nature Communications* 5:4006 (2014),
   https://doi.org/10.1038/ncomms5006 — and the TCIA dataset, https://doi.org/10.7937/K9/TCIA.2015.PF0M9REI
