@@ -13,7 +13,7 @@ therapy window.
 
 ## Notebooks
 
-### 1. `organ_segmentation.ipynb` — organ & tumor segmentation comparison (primary)
+### 1. `seg_work/organ_segmentation.ipynb` — organ & tumor segmentation comparison
 
 Single-timepoint analysis of NSCLC-Radiomics patient **LUNG1-133** (chest CT, 184 axial slices).
 
@@ -39,7 +39,7 @@ Single-timepoint analysis of NSCLC-Radiomics patient **LUNG1-133** (chest CT, 18
 Within one architecture (nnU-Net 2D/3D-lowres/3D-fullres) Dice is ~0.95–0.97 — i.e. **architecture
 choice matters more than configuration.** Tumor (expert GTV): **1.40 mL, ~0.024% of lung volume.** I would guess stage 1 Lung cancer diagnosis for this patient, although tumor size is not the sole factor to consider.
 
-### 2. `therapyNgrowthtracking/tumor_growth_tracking.ipynb` — longitudinal growth rate
+### 2. `therapyNgrowthtracking/tumor_growth_tracking.ipynb` — longitudinal growth/shrinkage tracking
 
 Double-timepoint analysis of patient **PD-1-Lung-00001** in **`anti_pd_1_lung`** immunotherapy collection (two CT timepoints 57 days apart, segmentation restricted to *AIMI lung and nodule AI segmentation* as the only shared segmentation model at both timepoints).
 
@@ -49,27 +49,47 @@ Double-timepoint analysis of patient **PD-1-Lung-00001** in **`anti_pd_1_lung`**
 - Result: GTV falls **1.86 mL → 0.70 mL (−62.5%) over 57 days** (VDT −40 d) — a volumetric treatment
   response approaching (but below) the RECIST-equivalent partial-response threshold.
 
+### 3. `therapyNgrowthtracking/tumor_growth_tracking_multiSEG.ipynb` - refined MTV estimate using PET/CT + AI segmentation vs Human drawn segmentation comparison
+
+Sister notebook to notebook #2 `tumor_growth_tracking.ipynb`. Same dataset plus PET/CT scans with **metabolic** segmentation (FDG-avid volume) for day 0 and two additional human-drawn segmentations for day 57 CT scan.
+
+- Draw unfiltered MTV using FDG-avid AI segmentation.
+- Computed **refined MTV** by excluding physiologic uptake and trying two different SUV (PET intensity unit) thresholding methods (day 0).
+- Compared the GTV delineated by the AI segmentation to two radiologist-drawn segmentations (day 57).
+- Result
+  - Refined MTV computed at **1.74 mL** on day 0 using fixed SUV4.0 threshold (**1.39 mL** using patient-derived adaptive threshold).
+<p align="center">
+    <img src="therapyNgrowthtracking/day0_mtv_method_comparison.png" width="500" alt="CT GTV vs PET MTV">
+</p>
+  - Across three (1 AI, 2 radiologists) segmentations, GTV estimated at **$0.744 \pm 0.136$** mL on day 57.
+
 ## Repository layout
 
 ```
 .
-├── organ_segmentation.ipynb            # Notebook no.1 (hand-edited)
-├── nsclc_LUNG1-133_ct_metadata.csv     # CT acquisition parameters
-├── seg_work/                           # outputs: tumor_gtv.csv, montage PNG (large .nii.gz gitignored)
+├── seg_work/                                  
+│   ├── organ_segmentation.ipynb               # Notebook no.1 (hand-edited)
+│   ├── nsclc_LUNG1-133_ct_metadata.csv         # CT acquisition parameters
+│   ├──organ_overlay_montage.png                # Overlay figure: Organ segmentation in axial CT scan 
+│   ├──tumor_gtv.csv                            # Saved dataset metrics
+│   └──timepoint_records.csv                    # Saved dataset metrics
 ├── therapyNgrowthtracking/
-│   ├── tumor_growth_tracking.ipynb     # Notebook no.2 (hand-edited)
-│   ├── gtv_bar_day0_day57.png          # A bar graph: GTV reduction after immunotherapy
-│   ├── tumor_slices_grid.png           # Overlay figure of all tumor-bearing CT scans
-│   ├── growth_metrics.csv              # Saved computed metrics
-│   └── timepoint_records.csv           # Raw per-timepoint measurements metadata
+│   ├── tumor_growth_tracking.ipynb            # Notebook no.2 (hand-edited)
+│   ├── gtv_bar_day0_day57.png                  # A bar graph: GTV reduction after immunotherapy
+│   ├── tumor_slices_grid.png                   # Overlay figure: all tumor-bearing CT scans
+│   ├── growth_metrics.csv                      # Saved computed metrics
+│   └── timepoint_records.csv                   # Raw per-timepoint measurements metadata
+│   ├── tumor_growth_tracking_multiSEG.ipynb   # Notebook no.3 (hand-edited)
+│   ├── day0_mtv_method_comparison.png          # A bar graph: GTV vs refined MTV (fixed, adaptive threshold)
+│   ├── day0_refined_mtv.png                    # Overlay figure: refined MTV (adaptive threshold) with anatomic GTV resampled on PET grid
+│   └── day0_fixed_suv4_overlay.png             # Overlay figure: refined MTV (fixed threshold) with anatomic GTV resampled on PET grid
 ├── imaging-data-commons-1.6.4/         # vendored IDC Claude skill (MIT, A. Fedorov)
 ├── README.md
 ├── LICENSE
 └── .gitignore
 ```
 
-\* `organ_segmentation.ipynb` has since been edited by hand and is the canonical version; re-running
-`build_seg_notebook.py` regenerates the original scaffold, not the hand-edited notebook.
+\* All notebooks have been edited by hand after being written with Claude and is the canonical version; re-running builder py regenerates the original scaffold, not the hand-edited notebook.
 
 Downloaded DICOM (`data/`, `therapyNgrowthtracking/data/`), the venv, and large `.nii.gz` volumes are
 gitignored — they are reproducible by re-running the notebooks.
